@@ -6,21 +6,14 @@ use std::{collections::HashSet, vec::{self, IntoIter}};
 
 pub fn find_largest_prime_factor_of_n(mut n: i64) -> i64 {
     let (mut max_prime, mut count): (i64, i64) = (-1, 5);
-    factorise_n_by_dividing_divisor_with_n(&mut n, &mut max_prime, 2);
-    factorise_n_by_dividing_divisor_with_n(&mut n, &mut max_prime, 3);
+    euler_utils::factorise_n_by_dividing_divisor_with_n(&mut n, &mut max_prime, 2);
+    euler_utils::factorise_n_by_dividing_divisor_with_n(&mut n, &mut max_prime, 3);
     while count as f64 <= (n as f64).sqrt() {
-        factorise_n_by_dividing_divisor_with_n(&mut n, &mut max_prime, count);
-        factorise_n_by_dividing_divisor_with_n(&mut n, &mut max_prime, (count + 2));
+        euler_utils::factorise_n_by_dividing_divisor_with_n(&mut n, &mut max_prime, count);
+        euler_utils::factorise_n_by_dividing_divisor_with_n(&mut n, &mut max_prime, (count + 2));
         count += 6;
     }
     if n > 4 { max_prime = n; } max_prime
-}
-
-fn factorise_n_by_dividing_divisor_with_n(n: &mut i64, factor: &mut i64, divisor: i64) {
-    while *n % divisor == 0 {
-        *factor = divisor;
-        *n = *n / divisor;
-    }
 }
 
 pub fn find_even_fibonacci_numbers_below_target(target: i32) -> Vec<i32> {
